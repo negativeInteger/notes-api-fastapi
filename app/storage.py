@@ -13,12 +13,12 @@ if not DATA_FILE.exists():
 # read notes
 def read_notes() -> List[Note]:
     with open(DATA_FILE, 'r') as file:
-        data =json.load(file)
-        # convert dicts to note objects
+        data = json.load(file)
+        # convert dicts to Note objects
         return [Note(**item) for item in data]
 
 # write notes
 def write_notes(notes: List[Note]) -> None:
     with open(DATA_FILE, 'w') as file:
-        # comvert note objects to dicts before saving
+        # convert Note objects to dicts before saving
         json.dump([note.model_dump() for note in notes], file, indent=4)

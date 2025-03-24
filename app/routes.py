@@ -74,6 +74,7 @@ def delete_note(note_id: str):
     for note in notes:
         if note.id == note_id:
             notes.remove(note)
+            write_notes(notes)
             return Response(status_code=status.HTTP_204_NO_CONTENT)  
         
     raise HTTPException(status_code=404, detail="Note not found")
