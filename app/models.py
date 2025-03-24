@@ -12,6 +12,6 @@ class CreateNote(BaseModel):
     description: Optional[str] = Field(default='no description provided yet', max_length=1000)
     
 class UpdateNote(BaseModel):
-    title: Optional[str] = Field(..., min_length=1, max_length=100)
-    description: Optional[str] = Field(default='no description provided yet', max_length=1000)
+    title: Optional[str] = Field(default=None, min_length=1, max_length=100)
+    description: Optional[str] = Field(default=None, max_length=1000)
     

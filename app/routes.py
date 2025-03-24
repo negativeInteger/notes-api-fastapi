@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status, Response
-from app.models import Note, CreateNote
+from app.models import Note, CreateNote, UpdateNote
 from app.storage import read_notes, write_notes
 
 # create a router instance
@@ -40,7 +40,7 @@ def get_note(note_id: str):
 
 # Update note by ID
 @router.put('/notes/{note_id}', response_model=Note)
-def update_note(note_id: str, updated_note: CreateNote):
+def update_note(note_id: str, updated_note: UpdateNote):
     notes = read_notes()
     
     if not updated_note.title and not updated_note.description:
@@ -56,11 +56,7 @@ def update_note(note_id: str, updated_note: CreateNote):
             if updated_note.description:
                 note.description = updated_note.description
             write_notes(notes)
-            return Note(
-                id = note_id,
-                title = updated_note.title,
-                description = updated_note.description
-            )
+            return note
     
     raise HTTPException(
         status_code=404,
@@ -75,8 +71,7 @@ def delete_note(note_id: str):
         if note.id == note_id:
             notes.remove(note)
             write_notes(notes)
-            return Response(status_code=status.HTTP_204_NO_CONTENT)  
-        
+            return         
     raise HTTPException(status_code=404, detail="Note not found")
     
     
